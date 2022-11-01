@@ -1,13 +1,9 @@
-
 //GLOBAL VARIABLES
 
 let width = 500
 let height = 500; 
 
 let text1, text2, save, cnv, img; 
-
-//let n;
-//let a=[];
 
 let audio = [];
 let images = [];
@@ -20,9 +16,6 @@ let images = [];
 function preload() {
 
 //IMAGES
-    //for (let n=1; n<3; n++) {
-	//let aimg= loadImage('assets/images/a'+ n +'.jpg')
-	//a.push(aimg)//a
 	images[0] = loadImage('assets/images/a.jpg')//a
 	images[1] = loadImage('assets/images/s.png')//s
 	images[2] = loadImage('assets/images/d.jpg')//d
@@ -84,6 +77,7 @@ function preload() {
 }
 
 
+
 //TESTO
 function createText1(){
 	text1= createDiv("Type a letter <br> to load a photo <br> and press a number <br> from 1 to 6 <br> to play with it");
@@ -99,7 +93,6 @@ function createText2(){
 
 
 
-
 function setup() {
 	var x = (windowWidth - width) / 2;
 	var y = (windowHeight - height) / 2;
@@ -112,6 +105,7 @@ function setup() {
 //testo
 	createText1()
 }
+
 
 
 function keyPressed() {
