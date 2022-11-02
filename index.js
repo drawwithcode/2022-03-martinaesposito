@@ -10,7 +10,6 @@ let images = [];
 
 
 
-
 //FUNZIONI
 
 function preload() {
@@ -29,7 +28,7 @@ function preload() {
 	images[10] = loadImage('assets/images/w.jpg')//w
 	images[11] = loadImage('assets/images/e.jpg')//e
 	images[12] = loadImage('assets/images/r.jpg')//r
-	images[13] = loadImage('assets/images/h.jpg')//t
+	images[13] = loadImage('assets/images/t.jpg')//t
 	images[14] = loadImage('assets/images/y.jpg')//y
 	images[15] = loadImage('assets/images/u.jpg')//u
 	images[16] = loadImage('assets/images/i.jpg')//i
@@ -40,7 +39,7 @@ function preload() {
 	images[21] = loadImage('assets/images/c.jpg')//c
 	images[22] = loadImage('assets/images/v.jpg')//v
 	images[23] = loadImage('assets/images/b.jpeg')//b
-	images[24] = loadImage('assets/images/n.jpeg')//n
+	images[24] = loadImage('assets/images/n.jpg')//n
 	images[25] = loadImage('assets/images/m.jpg')//m
 	//}
 
@@ -80,13 +79,13 @@ function preload() {
 
 //TESTO
 function createText1(){
-	text1= createDiv("Type a letter <br> to load a photo <br> and press a number <br> from 1 to 6 <br> to play with it");
+	text1= createDiv("Type a letter <br> to load a photo <br> and press a number <br> from 1 to 9 <br> to play with it");
 	text1.style(" position: absolute; background-color:black; width: 1000px;; color: white; text-align: center; font-family: Roboto, sans-serif; font-size: 60px")
 	text1.position((windowWidth - width*2) / 2, (windowHeight - height) / 2);
 }
 
 function createText2(){
-	text1= createDiv("Press 0 to save your design");
+	text1= createDiv("Press the spacebar to save your design");
 	text1.style(" position: absolute; width: 1000px;; color: white; text-align: center; font-family: Roboto, sans-serif; font-size: 15px")
 	text1.position((windowWidth - width*2) / 2, ((windowHeight - height) / 2 )+ height+ 30);
 }
@@ -258,11 +257,26 @@ function keyPressed() {
 				rect(x,y, 8);
 				}
 			
-	} else if (key == '2') {  //ERODE
-		let e=1; 
-		e++
-		filter(ERODE,e);
-		
+	} else if (key == '2') {  //INVERT BLUE AND RED
+
+		for (let y = 0; y < img.height; y++) {
+			for (let x = 0; x < img.width; x++) {
+			// Read the pixel's color
+			let originalColor = img.get(x, y);
+
+			// Inverse the color
+			const r = 125 - red(originalColor);
+			const g = green(originalColor);
+			const b = 255 - blue(originalColor);
+			let outputColor = color(r, g, b);
+
+			// Set the pixel's color
+			img.set(x, y, outputColor);
+			}
+		}
+		img.updatePixels();
+		image(img, 0, 0, 500, height);
+
 	} else if (key == '3') {  //DILATATE
 		let d=1; 
 		d++
@@ -273,19 +287,85 @@ function keyPressed() {
 		p-=1
 		filter(POSTERIZE,p);
 
-	} else if (key == '5') {  //INVERT
-		let i= 0.1;
-		i+=0.1
-		filter(INVERT,i);
+	} else if (key == '5') {  //INVERT RED AND GREEN
 
-	}  else if (key == '6') {  //BLUR
+		for (let y = 0; y < img.height; y++) {
+			for (let x = 0; x < img.width; x++) {
+			// Read the pixel's color
+			let originalColor = img.get(x, y);
+
+			// Inverse the color
+			const r = 255 - red(originalColor);
+			const g = 125 - green(originalColor);
+			const b = blue(originalColor);
+			let outputColor = color(r, g, b);
+
+			// Set the pixel's color
+			img.set(x, y, outputColor);
+			}
+		}
+		img.updatePixels();
+		image(img, 0, 0, 500, height);
+
+	} else if (key == '6') {  //BLUR
 		let b=1; 
 		b++
 		filter(BLUR, b);
-	}  
+
+	}  else if (key == '7') { //PIXEL SWAP
+
+		img= get( 0, 0, width, height);
+		
+		for (let i = 0; i < 1000; i++) {
+		const x1 = random(img.width);
+		const y1 = random(img.height);
+		const color1 = img.get(x1, y1);
+	
+		const x2 = random(img.width);
+		const y2 = random(img.height);
+		const color2 = img.get(x2, y2);
+	
+		//prende due pixel dell'immagine e assegna all'una il colore di un altro
+		img.set(x1, y1, color2);
+		img.set(x2, y2, color1);
+	}
+	img.updatePixels();
+	image(img, 0, 0, 500, height);
 
 
-	else if (key == '0') {  //SAVE
+	} else if (key == '8') { //INVERT GREEN AND BLUE
+
+		for (let y = 0; y < img.height; y++) {
+			for (let x = 0; x < img.width; x++) {
+			// Read the pixel's color
+			let originalColor = img.get(x, y);
+
+			// Inverse the color
+			const r = red(originalColor);
+			const g = 255 - green(originalColor);
+			const b = 125 - blue(originalColor);
+			let outputColor = color(r, g, b);
+
+			// Set the pixel's color
+			img.set(x, y, outputColor);
+			}
+		}
+		img.updatePixels();
+		image(img, 0, 0, 500, height);
+
+	} else if (key == '9') {//ERODE
+	let e=1; 
+	e++
+	filter(ERODE,e);
+	
+}
+}
+
+
+//SAVE
+function keyTyped(){
+
+ if (key == ' ') {  
 		
 		img= get( 0, 0, width, height);
 		console.log(img)
