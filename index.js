@@ -369,7 +369,7 @@ function keyTyped(){
 		
 		img= get( 0, 0, width, height);
 		console.log(img)
-		img.save('artwork', 'png');
+		img.save(' ', 'png');
 	} 
 	
 }
