@@ -366,8 +366,7 @@ function keyTyped(){
 	filter(ERODE,e);
 
 
-
-//SAVE
+//save
 	} else if (key == ' ') {  
 		
 		img= get( 0, 0, width, height);
