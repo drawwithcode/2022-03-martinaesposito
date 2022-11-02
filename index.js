@@ -9,12 +9,10 @@ let audio = [];
 let images = [];
 
 
-
 //FUNZIONI
 
 function preload() {
-
-//IMAGES
+//images
 	images[0] = loadImage('assets/images/a.jpg')//a
 	images[1] = loadImage('assets/images/s.png')//s
 	images[2] = loadImage('assets/images/d.jpg')//d
@@ -43,7 +41,7 @@ function preload() {
 	images[25] = loadImage('assets/images/m.jpg')//m
 	//}
 
-//SOUNDS
+//sounds
 	audio[0] = loadSound('assets/sounds/A.wav')//a
 	audio[1] = loadSound('assets/sounds/S.wav');//s
 	audio[2] = loadSound('assets/sounds/D.wav');//d
@@ -71,8 +69,22 @@ function preload() {
 	audio[24] = loadSound('assets/sounds/N.wav');//n
 	audio[25] = loadSound('assets/sounds/M.wav');//m
 
-//FONTS
+//fonts
 	Roboto = loadFont('assets/fonts/Roboto/Roboto-Regular.ttf');
+}
+
+
+function setup() {
+	var x = (windowWidth - width) / 2;
+	var y = (windowHeight - height) / 2;
+	
+//canvas
+	let cnv= createCanvas(width, height); 
+	background("black");
+	cnv.position(x, y);
+
+//testo
+	createText1()
 }
 
 
@@ -92,27 +104,12 @@ function createText2(){
 
 
 
-function setup() {
-	var x = (windowWidth - width) / 2;
-	var y = (windowHeight - height) / 2;
-	
-//canvas
-	let cnv= createCanvas(width, height); 
-	background("black");
-	cnv.position(x, y);
-
-//testo
-	createText1()
-}
-
-
-
+//LETTERS
 function keyPressed() {
 
 	text1.hide()
 	createText2()
 
-//LETTERS
 	if  (key == 'a') {
 		audio[0].play();
 		image(images[0], 0, 0, width, height)
@@ -211,13 +208,13 @@ function keyPressed() {
 	}else if (key == 'z') {
 		audio[19].play();
 		image(images[19], 0, 0, width, height);
-	img= get(0, 0, width, height)
+		img= get(0, 0, width, height)
 
 	}else if (key == 'x') {
 		audio[20].play();
 		image(images[20], 0, 0, width, height);
 		img= get(0, 0, width, height)
-
+		
 	}else if (key == 'c') {
 		audio[21].play();
 		image(images[21], 0, 0, width, height);
@@ -243,9 +240,14 @@ function keyPressed() {
 		image(images[21], 0, 0, width, height);
 		img= get(0, 0, width, height)
 
+	}
+}
 
-//NUMBERS
-	}else if (key == '1') { //RANDOM RECT
+
+
+//NUMBERS AND SAVE
+function keyTyped(){
+	 if (key == '1') { //RANDOM RECT
 	
 			for (let i=0; i<1000; i++) {
 				const x = random(0, width);
@@ -261,16 +263,17 @@ function keyPressed() {
 
 		for (let y = 0; y < img.height; y++) {
 			for (let x = 0; x < img.width; x++) {
-			// Read the pixel's color
+			// prendo il colore del singolo pixel
 			let originalColor = img.get(x, y);
 
-			// Inverse the color
+			// sottraggo al totale per ciascun canale (255) il valore attuale generando un nuovo valore
 			const r = 125 - red(originalColor);
 			const g = green(originalColor);
 			const b = 255 - blue(originalColor);
+			//genero un nuovo colore del pixel sulla base della sottrazione
 			let outputColor = color(r, g, b);
 
-			// Set the pixel's color
+			//ridisegno l'immagine con i colori dei nuovi pixel
 			img.set(x, y, outputColor);
 			}
 		}
@@ -284,26 +287,27 @@ function keyPressed() {
 
 	} else if (key == '4') {  //POSTERIZE
 		let p=10;
-		p-=1
 		filter(POSTERIZE,p);
 
 	} else if (key == '5') {  //INVERT RED AND GREEN
 
 		for (let y = 0; y < img.height; y++) {
 			for (let x = 0; x < img.width; x++) {
-			// Read the pixel's color
+			// prendo il colore del singolo pixel
 			let originalColor = img.get(x, y);
 
-			// Inverse the color
+			// sottraggo al totale per ciascun canale (255) il valore attuale generando un nuovo valore
 			const r = 255 - red(originalColor);
 			const g = 125 - green(originalColor);
 			const b = blue(originalColor);
+			//genero un nuovo colore del pixel sulla base della sottrazione
 			let outputColor = color(r, g, b);
 
-			// Set the pixel's color
+			//ridisegno l'immagine con i colori dei nuovi pixel
 			img.set(x, y, outputColor);
 			}
 		}
+
 		img.updatePixels();
 		image(img, 0, 0, 500, height);
 
@@ -325,10 +329,11 @@ function keyPressed() {
 		const y2 = random(img.height);
 		const color2 = img.get(x2, y2);
 	
-		//prende due pixel dell'immagine e assegna all'una il colore di un altro
+		//prende due pixel dell'immagine e assegnO all'uno il colore dell' altro
 		img.set(x1, y1, color2);
 		img.set(x2, y2, color1);
-	}
+		}
+		
 	img.updatePixels();
 	image(img, 0, 0, 500, height);
 
@@ -337,19 +342,21 @@ function keyPressed() {
 
 		for (let y = 0; y < img.height; y++) {
 			for (let x = 0; x < img.width; x++) {
-			// Read the pixel's color
+			// prendo il colore del singolo pixel
 			let originalColor = img.get(x, y);
 
-			// Inverse the color
+			// sottraggo al totale per ciascun canale (255) il valore attuale generando un nuovo valore
 			const r = red(originalColor);
 			const g = 255 - green(originalColor);
 			const b = 125 - blue(originalColor);
+			//genero un nuovo colore del pixel sulla base della sottrazione
 			let outputColor = color(r, g, b);
 
-			// Set the pixel's color
+			//ridisegno l'immagine con i colori dei nuovi pixel
 			img.set(x, y, outputColor);
 			}
 		}
+		
 		img.updatePixels();
 		image(img, 0, 0, 500, height);
 
@@ -357,19 +364,16 @@ function keyPressed() {
 	let e=1; 
 	e++
 	filter(ERODE,e);
-	
-}
-}
+
 
 
 //SAVE
-function keyTyped(){
-
- if (key == ' ') {  
+	} else if (key == ' ') {  
 		
 		img= get( 0, 0, width, height);
 		console.log(img)
 		img.save(' ', 'png');
+		
 	} 
 	
 }
