@@ -86,7 +86,7 @@ function createText1(){
 
 function createText2(){
 	text1= createDiv("Press the spacebar to save your design");
-	text1.style(" position: absolute; width: 1000px;; color: white; text-align: center; font-family: Roboto, sans-serif; font-size: 15px")
+	text1.style(" position: absolute; width: 1000px;; color: white; text-align: center; font-family: Roboto, sans-serif; font-size: 18px")
 	text1.position((windowWidth - width*2) / 2, ((windowHeight - height) / 2 )+ height+ 30);
 }
 
